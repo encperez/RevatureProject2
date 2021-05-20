@@ -2,6 +2,7 @@ package com.example.yolla_backend.Service;
 
 import com.example.yolla_backend.DAO.UserRepo;
 import com.example.yolla_backend.Model.User;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j // lombok logging via log
+@Log4j2 // lombok logging via log
 @Component
 /**
  *
@@ -47,7 +48,6 @@ public class UserService {
     /**
      *
      * @param username
-     * @param password
      * @return returned user
      */
     User GetUser(String username) {
@@ -108,7 +108,7 @@ public class UserService {
 
     /**
      *
-     * @param w
+     * @param word
      */
     void AddWord(String word){}
 
