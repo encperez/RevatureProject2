@@ -4,13 +4,13 @@
 # ...
 
 spring:
-  main:
-    banner-mode: off
-    log-startup-info: false
   data:
     mongodb:
       host: localhost
       port: 27017
       database: yollaDB
+  main:
+    banner-mode: off
+    log-startup-info: false
 app:
   name: YollaBackend

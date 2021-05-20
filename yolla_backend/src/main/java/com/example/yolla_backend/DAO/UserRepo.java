@@ -1,6 +1,7 @@
 package com.example.yolla_backend.DAO;
 
 import com.example.yolla_backend.Model.User;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.text.MessageFormat;
 
-@Slf4j // lombok logging via log
+@Log4j2 // lombok logging via log
 @Repository
 /**
  *
