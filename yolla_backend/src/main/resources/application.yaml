@@ -1,0 +1,16 @@
+# .properties -> yaml format (python indented)
+# spring.main.banner-mode=off
+# spring.main.log-startup-info=false
+# ...
+
+spring:
+  main:
+    banner-mode: off
+    log-startup-info: false
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: yollaDB
+app:
+  name: YollaBackend
