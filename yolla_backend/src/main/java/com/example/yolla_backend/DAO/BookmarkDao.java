@@ -25,7 +25,11 @@ public class BookmarkDao {
     }
 
     public Bookmark putBookmark(Bookmark bookmark) {
-        template.save(bookmark);
+        template.save(bookmark, "bookmarks");
         return bookmark;
+    }
+
+    public void removeBookmark(Bookmark bookmark) {
+        template.remove(bookmark, "bookmarks");
     }
 }

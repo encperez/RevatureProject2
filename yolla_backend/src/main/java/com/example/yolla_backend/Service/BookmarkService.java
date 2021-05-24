@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Log4j2
 @Component
@@ -30,5 +32,21 @@ public class BookmarkService {
         log.info("New bookmark created");
 
         return true;
+    }
+
+    void removeBookmark(String id) {
+        Bookmark targetBookmark = dao.getBookmark(id);
+        dao.removeBookmark(targetBookmark);
+    }
+
+    Bookmark[] getBookmarks(List<String> bookmarks) {
+        Bookmark[] bookmarkArray = new Bookmark[bookmarks.size()];
+
+        for (int i = 0; i < bookmarks.size(); i++) {
+            Bookmark tempBookmark = dao.getBookmark(bookmarks.get(i));
+            bookmarkArray[i] = tempBookmark;
+        }
+
+        return bookmarkArray;
     }
 }
