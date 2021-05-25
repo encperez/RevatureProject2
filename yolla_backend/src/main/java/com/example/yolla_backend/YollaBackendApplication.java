@@ -22,6 +22,7 @@ public class YollaBackendApplication {
 		ctx.refresh();
 		SpringApplication.run(YollaBackendApplication.class, args);
 
+		//for testing purposes, keep server running
 		while(true);
 	}
 

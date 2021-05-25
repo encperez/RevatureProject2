@@ -19,6 +19,7 @@ import java.util.List;
 
 @Log4j2
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 /**
  *
  */
@@ -73,7 +74,8 @@ public class UserController {
     @GetMapping(path = "/user/{id}")
     public ResponseEntity GetUser(@PathVariable String id) {
         log.info("GetUser: " + id);
-        return ResponseEntity.ok(service.GetUserById(id));
+        User u = service.GetUserById(id);
+        return ResponseEntity.ok(u);
     }
 
     /**
