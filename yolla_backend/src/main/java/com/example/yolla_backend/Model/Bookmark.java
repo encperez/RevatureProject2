@@ -13,7 +13,7 @@ public class Bookmark {
     @Id
     @NonNull String id;
     @NonNull String title;
-    @NonNull int startTime;
-    @NonNull int endTime;
+    int startTime;
+    int endTime;
     @NonNull String url;
 }
