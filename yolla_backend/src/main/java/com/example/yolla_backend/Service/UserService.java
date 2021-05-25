@@ -6,13 +6,17 @@ import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Log4j2 // lombok logging via log
-@Component
+@Service
 /**
  *
  */
@@ -21,6 +25,9 @@ public class UserService {
     @Autowired
     private UserRepo dao;
 
+    /**
+     *
+     */
     public void clear() {
         dao.clear();
     }
@@ -31,14 +38,11 @@ public class UserService {
      * @param password
      * @return true if user is created
      */
-    boolean NewUser(String username, String password) {
+    public boolean NewUser(String username, String password) {
         User u = dao.GetUser(username);
         boolean success = false;
         if(u == null) {
-            User newUser = new User();
-            newUser.setUsername(username);
-            newUser.setPassword(password);
-            dao.PutUser(newUser);
+            dao.PutUser(new User(username, password));
             success = true;
         }
         log.info(MessageFormat.format("NewUser({0},{1}) {2}", username, password, success ? "Success" : "Fail"));
@@ -50,11 +54,11 @@ public class UserService {
      * @param username
      * @return returned user
      */
-    User GetUser(String username) {
+    public User GetUser(String username) {
         return dao.GetUser(username);
     }
 
-    User GetUserById(String id) {
+    public User GetUserById(String id) {
         return dao.GetUserById(id);
     }
 
@@ -63,58 +67,71 @@ public class UserService {
      * @param id
      * @return
      */
-    List<String> GetBookmarks(String id) {
-       return null;
-    }
+//    public List<String> GetBookmarks(String username, String id) {
+//       return null;
+//    }
 
     /**
      * Calls get GetBookmarks
      * @param id
      * @return
      */
-    List<String> GetBookmark(String id) {
-        return null;
-    }
+//    public List<String> GetBookmark(String username, String id) {
+//        return null;
+//    }
 
     /**
      *
      * @param id
      * @return
      */
-    Map<String, String> GetWords(String id) {
-        return null;
-    }
-
-    /**
-     * calls GetWords
-     * @param id
-     * @return
-     */
-    Map<String, String> GetWord(String id) {
-        return null;
+    public List<String> GetWords(String id) {
+        User u = dao.GetUserById(id);
+        return u.getWords().keySet().stream().collect(Collectors.toList());
     }
 
     /**
      *
      * @param b
      */
-//    void AddBookMark(BookMark b) {}
+//    public void AddBookMark(String username, BookMark b) {}
 
     /**
      *
      * @param id
      */
-    void RemoveBookMark(String id){}
+    //public void RemoveBookMark(String username, String id){}
 
     /**
      *
+     * @param id
      * @param word
      */
-    void AddWord(String word){}
+    public void AddWord(String id, String word){
+        User u = dao.GetUserById(id);
+        u.getWords().put(word, null);
+        dao.PutUser(u);
+    }
 
     /**
      *
+     * @param id
      * @param word
      */
-    void RemoveWord(String word){}
+    public void RemoveWord(String id, String word){
+        User u = dao.GetUserById(id);
+        u.getWords().remove(word);
+        dao.PutUser(u);
+    }
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    public User LoginUser(String username, String password) {
+        User u = dao.GetUser(username);
+        return (u != null && u.getPassword() == password) ? u : null;
+    }
 }
