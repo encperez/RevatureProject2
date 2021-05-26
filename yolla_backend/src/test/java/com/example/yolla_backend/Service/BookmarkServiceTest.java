@@ -27,23 +27,22 @@ public class BookmarkServiceTest {
     @Test
     void newBookmarkTest() {
         User user = new User("Michael", "Fong");
-        user.setId("testUser");
         bookmarkDao.updateUser(user);
-        boolean success = service.newBookmark("test" , 0, 0, "test", user.getId());
+        boolean success = service.newBookmark("test" , 0, 0, "test", "Michael");
         assertTrue(success);
     }
 
     @Test
     void removeBookmarkTest() {
         newBookmarkTest();
-        service.removeBookmark(bookmarkDao.getBookmarkByTitle("test").getId(), "testUser");
+        service.removeBookmark(bookmarkDao.getBookmarkByTitle("test").getId(), "Michael");
         assertEquals(null, bookmarkDao.getBookmarkByTitle("test"));
     }
 
     @Test
     void getBookmarksTest() {
         newBookmarkTest();
-        Bookmark[] bookmarks = service.getBookmarks("testUser");
+        Bookmark[] bookmarks = service.getBookmarks("Michael");
         assertNotEquals(0, bookmarks.length);
         service.clear();
     }

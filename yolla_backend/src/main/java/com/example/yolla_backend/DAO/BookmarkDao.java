@@ -35,9 +35,9 @@ public class BookmarkDao {
         return targetBookmark;
     }
 
-    public User getUserById(String id){
+    public User getUserByUsername(String username){
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(id));
+        query.addCriteria(Criteria.where("username").is(username));
         User user = template.findOne(query, User.class, "users");
         return user;
     }

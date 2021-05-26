@@ -22,7 +22,7 @@ public class BookmarkService {
         dao.clear();
     }
 
-    public boolean newBookmark(String title, int startTime, int endTime, String url, String id) {
+    public boolean newBookmark(String title, int startTime, int endTime, String url, String username) {
         Bookmark newBookmark = new Bookmark();
         newBookmark.setTitle(title);
         newBookmark.setStartTime(startTime);
@@ -31,27 +31,27 @@ public class BookmarkService {
         dao.putBookmark(newBookmark);
 
         log.info("New bookmark created");
-        User user = dao.getUserById(id);
+        User user = dao.getUserByUsername(username);
         user.getBookmarks().add(newBookmark.getId());
         dao.updateUser(user);
 
         return true;
     }
 
-    public void removeBookmark(String bookmarkId, String userId) {
+    public void removeBookmark(String bookmarkId, String username) {
         System.out.println("Check 0");
         Bookmark targetBookmark = dao.getBookmarkById(bookmarkId);
         System.out.println("Check 1");
         dao.removeBookmark(targetBookmark);
 
-        User user = dao.getUserById(userId);
+        User user = dao.getUserByUsername(username);
         System.out.println("Check 2");
         user.getBookmarks().remove(bookmarkId);
         dao.updateUser(user);
     }
 
-    public Bookmark[] getBookmarks(String userId) {
-        User user = dao.getUserById(userId);
+    public Bookmark[] getBookmarks(String username) {
+        User user = dao.getUserByUsername(username);
         List<String> bookmarks = user.getBookmarks();
         Bookmark[] bookmarkArray = new Bookmark[bookmarks.size()];
 
