@@ -132,6 +132,6 @@ public class UserService {
      */
     public User LoginUser(String username, String password) {
         User u = dao.GetUser(username);
-        return (u != null && u.getPassword() == password) ? u : null;
+        return (u != null && u.getPassword().equals(password)) ? u : null;
     }
 }

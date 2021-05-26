@@ -19,6 +19,7 @@ import java.util.List;
 
 @Log4j2
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 /**
  *
  */
@@ -58,6 +59,7 @@ public class UserController {
      * @param form
      * @return
      */
+
     @PostMapping(path = "/login")
     public ResponseEntity LoginUser(@RequestBody LoginForm form) {
         log.info("login: " + form.getUsername());

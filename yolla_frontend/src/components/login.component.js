@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+import { useAppContext } from "../libs/contextLib";
 
 export default class Login extends Component {
 
@@ -14,11 +16,24 @@ export default class Login extends Component {
       }
 
       handleSubmit = (event) => {
-        if (this.state.username === "user" && this.state.password ==="password" )
-        {
-            alert("Valid Login")
-        }
-        alert(this.state.username);
+
+        const request = {username: this.state.username, password: this.state.password};
+        // let response;
+        let response;
+      //  const { userHasAuthenticated } = useAppContext();
+        axios.post('http://localhost:8080/login', request).then(res=>{
+            response = res.data;
+            console.log(res.data);
+        }).then(resp =>{
+            if(response === ""){
+                alert("Incorrect username or password!");
+            }
+            else{
+                alert("Valid Login");
+               // this.props.userHasAuthenticated(true);
+                this.props.history.push("/home");
+            }
+        });
         event.preventDefault();
       }
 
