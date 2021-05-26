@@ -17,20 +17,28 @@ public class BookmarkDao {
     private MongoTemplate template;
 
     public void clear () {
-        template.dropCollection(Bookmark.class);
+        template.dropCollection("bookmarks");
+        template.dropCollection("users");
     }
 
-    public Bookmark getBookmark (String id) {
+    public Bookmark getBookmarkById (String id) {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(id));
-        Bookmark targetBookmark = template.findOne(query, Bookmark.class);
+        Bookmark targetBookmark = template.findOne(query, Bookmark.class, "bookmarks");
+        return targetBookmark;
+    }
+
+    public Bookmark getBookmarkByTitle (String title) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("title").is(title));
+        Bookmark targetBookmark = template.findOne(query, Bookmark.class, "bookmarks");
         return targetBookmark;
     }
 
     public User getUserById(String id){
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(id));
-        User user = template.findOne(query, User.class);
+        User user = template.findOne(query, User.class, "users");
         return user;
     }
 

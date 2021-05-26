@@ -39,10 +39,13 @@ public class BookmarkService {
     }
 
     public void removeBookmark(String bookmarkId, String userId) {
-        Bookmark targetBookmark = dao.getBookmark(bookmarkId);
+        System.out.println("Check 0");
+        Bookmark targetBookmark = dao.getBookmarkById(bookmarkId);
+        System.out.println("Check 1");
         dao.removeBookmark(targetBookmark);
 
         User user = dao.getUserById(userId);
+        System.out.println("Check 2");
         user.getBookmarks().remove(bookmarkId);
         dao.updateUser(user);
     }
@@ -53,7 +56,7 @@ public class BookmarkService {
         Bookmark[] bookmarkArray = new Bookmark[bookmarks.size()];
 
         for (int i = 0; i < bookmarks.size(); i++) {
-            Bookmark tempBookmark = dao.getBookmark(bookmarks.get(i));
+            Bookmark tempBookmark = dao.getBookmarkById(bookmarks.get(i));
             bookmarkArray[i] = tempBookmark;
         }
 
