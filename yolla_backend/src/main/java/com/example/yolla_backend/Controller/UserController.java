@@ -75,7 +75,8 @@ public class UserController {
     @GetMapping(path = "/user/{id}")
     public ResponseEntity GetUser(@PathVariable String id) {
         log.info("GetUser: " + id);
-        return ResponseEntity.ok(service.GetUserById(id));
+        User u = service.GetUserById(id);
+        return ResponseEntity.ok(u);
     }
 
     /**

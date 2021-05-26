@@ -48,7 +48,7 @@ public class UserRepo {
      */
     public User GetUserById(String id){
         Query query = new Query();
-        query.addCriteria(Criteria.where("id").is(id));
+        query.addCriteria(Criteria.where("_id").is(id));
         List<User> users = template.find(query, User.class);
         return users.size() > 0 ? users.get(0) : null;
     }

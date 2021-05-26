@@ -2,6 +2,7 @@ package com.example.yolla_backend.Service;
 
 import com.example.yolla_backend.DAO.BookmarkDao;
 import com.example.yolla_backend.Model.Bookmark;
+import com.example.yolla_backend.Model.User;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class BookmarkService {
         dao.clear();
     }
 
-    boolean newBookmark(String title, int startTime, int endTime, String url) {
+    public boolean newBookmark(String title, int startTime, int endTime, String url, String id) {
         Bookmark newBookmark = new Bookmark();
         newBookmark.setTitle(title);
         newBookmark.setStartTime(startTime);
@@ -30,20 +31,32 @@ public class BookmarkService {
         dao.putBookmark(newBookmark);
 
         log.info("New bookmark created");
+        User user = dao.getUserById(id);
+        user.getBookmarks().add(newBookmark.getId());
+        dao.updateUser(user);
 
         return true;
     }
 
-    void removeBookmark(String id) {
-        Bookmark targetBookmark = dao.getBookmark(id);
+    public void removeBookmark(String bookmarkId, String userId) {
+        System.out.println("Check 0");
+        Bookmark targetBookmark = dao.getBookmarkById(bookmarkId);
+        System.out.println("Check 1");
         dao.removeBookmark(targetBookmark);
+
+        User user = dao.getUserById(userId);
+        System.out.println("Check 2");
+        user.getBookmarks().remove(bookmarkId);
+        dao.updateUser(user);
     }
 
-    Bookmark[] getBookmarks(List<String> bookmarks) {
+    public Bookmark[] getBookmarks(String userId) {
+        User user = dao.getUserById(userId);
+        List<String> bookmarks = user.getBookmarks();
         Bookmark[] bookmarkArray = new Bookmark[bookmarks.size()];
 
         for (int i = 0; i < bookmarks.size(); i++) {
-            Bookmark tempBookmark = dao.getBookmark(bookmarks.get(i));
+            Bookmark tempBookmark = dao.getBookmarkById(bookmarks.get(i));
             bookmarkArray[i] = tempBookmark;
         }
 
