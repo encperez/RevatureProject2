@@ -21,7 +21,6 @@ public class BookmarkController {
     @PostMapping(path = "/newBookmark")
     public ResponseEntity newBookmark(@RequestBody BookmarkForm form) {
         log.info("New Bookmark:" + form.getUsername());
-        System.out.println("New Bookmark");
         boolean result = service.newBookmark(form.getTitle(), form.getStarttime(), form.getEndtime(), form.getUrl(), form.getUsername());
         return ResponseEntity.ok(result);
     }

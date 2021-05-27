@@ -3,6 +3,7 @@ import axios from "axios";
 import Word from "./word.component";
 import Video from "./video.component";
 import Caption from './caption.component';
+import Bookmark from './bookmark.component';
 import { GlobalProvider } from "./global.context";
 
 export default class Home extends Component {
@@ -56,6 +57,9 @@ export default class Home extends Component {
                 <GlobalProvider>
                 <div>
                     <Video />
+                </div>
+                <div>
+                    <Bookmark />
                 </div>
                 <Caption />
                 <div>
