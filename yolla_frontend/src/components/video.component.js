@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import GlobalContext from './global.context'
 
 export default class Video extends Component {
+    static contextType = GlobalContext
 
 
 
@@ -31,6 +33,8 @@ export default class Video extends Component {
     handleSubmit = (event) => {
 
       alert(this.state.url);
+      const {url, setUrl, word, setWord, user, setUser} = this.context
+      setUrl(this.state.url)
       let embedURL = this.makeEmbedURL(this.state.url);
       alert(embedURL);
       document.getElementById("player").src = "//www.youtube.com/embed/" + embedURL;

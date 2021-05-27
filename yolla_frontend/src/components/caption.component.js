@@ -11,9 +11,9 @@ const UPDATE_CAPTION_MS = 250 //
 
 export default class Caption extends Component {
     static contextType = GlobalContext
-
     constructor(props) {
         super(props)
+        console.log(this);
         this.state = {
             line: '', 
             timestamp: 0,
@@ -63,6 +63,7 @@ export default class Caption extends Component {
         this.getCaptions(id)
 
         setTimeout(() => {
+            console.log(this.context.user)
             console.log(this.context.url)
         }, 1)
     }

@@ -9,8 +9,8 @@ import { AppContext } from "./libs/contextLib";
 import { GlobalProvider } from "./components/global.context";
 
 function App() {
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
   return (<Router>
+    localStorage.setItem
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
@@ -29,13 +29,11 @@ function App() {
       <div className="auth-wrapper">
         <div className="auth-inner">
           <Switch>
-          <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
-            <GlobalProvider>
+          <GlobalProvider>
             <Route exact path='/' component={Login} />
             <Route path="/sign-in" component={Login} />
             <Route path="/home" component={Home} />
-            </GlobalProvider>
-            </AppContext.Provider>
+          </GlobalProvider>
           </Switch>
         </div>
       </div>

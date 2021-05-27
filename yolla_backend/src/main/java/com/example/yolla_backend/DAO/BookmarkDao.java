@@ -38,12 +38,12 @@ public class BookmarkDao {
     public User getUserByUsername(String username){
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
-        User user = template.findOne(query, User.class, "users");
+        User user = template.findOne(query, User.class);
         return user;
     }
 
     public User updateUser(User u) {
-        template.save(u, "users");
+        template.save(u);
         return u;
     }
 

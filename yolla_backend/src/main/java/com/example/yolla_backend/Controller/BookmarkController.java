@@ -1,5 +1,6 @@
 package com.example.yolla_backend.Controller;
 
+import com.example.yolla_backend.Model.BookmarkForm;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,10 @@ public class BookmarkController {
 
     public void clear() { service.clear(); }
 
-    @PostMapping("/bookmark/{userid}/{title}")
-    public ResponseEntity newBookmark(@PathVariable String title, @PathVariable int startTime, @PathVariable int endTime, @PathVariable String url, @PathVariable String userid) {
-        log.info("New Bookmark:" + title);
-        boolean result = service.newBookmark(title, startTime, endTime, url, userid);
+    @PostMapping(path = "/newBookmark")
+    public ResponseEntity newBookmark(@RequestBody BookmarkForm form) {
+        log.info("New Bookmark:" + form.getUsername());
+        boolean result = service.newBookmark(form.getTitle(), form.getStarttime(), form.getEndtime(), form.getUrl(), form.getUsername());
         return ResponseEntity.ok(result);
     }
 
