@@ -53,7 +53,7 @@ export default class Home extends Component {
     render() {
         return (
             <React.Fragment>
-                <GlobalProvider>
+                {/* <GlobalProvider> */}
                 <div>
                     <Video />
                 </div>
@@ -61,7 +61,7 @@ export default class Home extends Component {
                 <div>
                     <Word />
                 </div>
-                </GlobalProvider>    
+                {/* </GlobalProvider>     */}
             </React.Fragment>
         );
         

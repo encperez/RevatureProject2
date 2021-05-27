@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/login.component";
 import Home from "./components/home.component";
 import { AppContext } from "./libs/contextLib";
+import { GlobalProvider } from "./components/global.context";
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -29,9 +30,11 @@ function App() {
         <div className="auth-inner">
           <Switch>
           <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+            <GlobalProvider>
             <Route exact path='/' component={Login} />
             <Route path="/sign-in" component={Login} />
             <Route path="/home" component={Home} />
+            </GlobalProvider>
             </AppContext.Provider>
           </Switch>
         </div>
