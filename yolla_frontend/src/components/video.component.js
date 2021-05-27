@@ -50,7 +50,7 @@ export default class Video extends Component {
                     </div>
                     <button type="submit" className="btn btn-primary btn-block">Submit</button>
                 </form>
-                <iframe src="https://www.youtube.com/embed/cWDJoK8zw58" id="player"/>
+                <iframe src="https://www.youtube.com/embed/zenMEj0cAC4?enablejsapi=1" id="player"/>
             </React.Fragment>         
         );
         

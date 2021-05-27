@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import Word from "./word.component";
 import Video from "./video.component";
+import Caption from './caption.component';
+import { LinkProvider } from "./link.context";
 
 export default class Home extends Component {
 
@@ -51,14 +53,16 @@ export default class Home extends Component {
     render() {
         return (
             <React.Fragment>
+                <LinkProvider>
                 <div>
                     <Video />
                 </div>
+                <Caption />
                 <div>
                     <Word />
                 </div>
+                </LinkProvider>    
             </React.Fragment>
-             
         );
         
     }
