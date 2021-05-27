@@ -18,7 +18,7 @@ export default class Bookmark extends Component {
 
     handleSubmit = (event) => {
         const {url, setUrl, word, setWord, user, setUser} = this.context
-        const request = {title: this.state.title, starttime: this.state.starttime, endtime: this.state.endtime, url: this.context.url, username: "gene"}
+        const request = {title: this.state.title, starttime: this.state.starttime, endtime: this.state.endtime, url: this.context.url, username: sessionStorage.getItem("myUser")}
         let response;
         axios.post('http://localhost:8080/newBookmark', request).then(res=>{
             response = res.data;
