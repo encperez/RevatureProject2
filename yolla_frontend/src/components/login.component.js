@@ -33,6 +33,8 @@ export default class Login extends Component {
             }
             else{
                 sessionStorage.setItem('myUser', this.state.username);
+                sessionStorage.setItem('myID', response);
+                console.log("yo yo yo" + sessionStorage.getItem("myID"));
                 this.context.setUser(this.state.username);
                 console.log(sessionStorage.getItem("myUser"));
                 alert("Valid Login");
