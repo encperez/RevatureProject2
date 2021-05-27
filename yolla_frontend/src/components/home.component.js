@@ -7,20 +7,14 @@ import Bookmark from './bookmark.component';
 import { GlobalProvider } from "./global.context";
 
 export default class Home extends Component {
-
-
-
     constructor(props) {
         super(props);
-        this.state = { url: ''};
-        const dictionaryAPI = async() =>{
-            try{
-                const data= await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/plane')
-            }catch (error){
-                console.log(error);
-            }
+        if(sessionStorage.getItem("myUser") == null){
+            console.log("No Login")
+            props.history.push("/");
         }
-
+        this.state = { url: ''};
+        console.log(sessionStorage.getItem("myUser")+" has made it.")
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,6 +43,7 @@ export default class Home extends Component {
       document.getElementById("player").src = "//www.youtube.com/embed/" + embedURL;
       event.preventDefault();
     }
+
 
     
     render() {

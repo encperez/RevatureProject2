@@ -5,9 +5,12 @@ export const GlobalContext = React.createContext()
 
 class GlobalProvider extends Component {
     state = {
-        url: "www.test.com",        
+        url: "www.test.com",
+        setUrl: this.setUrl,        
         word: 'bird',
-        user: ''
+        setWord: this.setWord,
+        user: '',
+        setUser: this.setUser
     }
 
     setUrl = (u) => {
@@ -19,6 +22,7 @@ class GlobalProvider extends Component {
     }
 
     setUser = (u) => {
+        console.log("I'm here");
         this.setState({user: u})
     }
 

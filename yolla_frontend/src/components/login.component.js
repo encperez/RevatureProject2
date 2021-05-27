@@ -1,11 +1,16 @@
-import React, { Component } from "react";
+import React, { Consumer, Component } from "react";
 import axios from "axios";
 import { useAppContext } from "../libs/contextLib";
+import GlobalContext from './global.context'
 
 export default class Login extends Component {
 
+    static contextType = GlobalContext;
     constructor(props) {
         super(props);
+        console.log(this);
+        //const  userHasAuthenticated  = this.props.isAuthenticated;
+        //console.log(userHasAuthenticated);
         this.state = { username: '', password: '' };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,9 +23,7 @@ export default class Login extends Component {
       handleSubmit = (event) => {
 
         const request = {username: this.state.username, password: this.state.password};
-        // let response;
         let response;
-      //  const { userHasAuthenticated } = useAppContext();
         axios.post('http://localhost:8080/login', request).then(res=>{
             response = res.data;
             console.log(res.data);
@@ -29,8 +32,10 @@ export default class Login extends Component {
                 alert("Incorrect username or password!");
             }
             else{
+                sessionStorage.setItem('myUser', this.state.username);
+                this.context.setUser(this.state.username);
+                console.log(sessionStorage.getItem("myUser"));
                 alert("Valid Login");
-               // this.props.userHasAuthenticated(true);
                 this.props.history.push("/home");
             }
         });
@@ -58,8 +63,11 @@ export default class Login extends Component {
                         <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                     </div>
                 </div>
-
-                <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                <GlobalContext.Consumer>
+                {({ user , setUser }) => (
+                    <button type="submit" className="btn btn-primary btn-block" onClick={() => setUser(this.state.username)}>Submit</button>
+                )}
+                </GlobalContext.Consumer>
             </form>
         );
     }

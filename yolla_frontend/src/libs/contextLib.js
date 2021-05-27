@@ -1,7 +1,22 @@
-import { useContext, createContext } from "react";
+import { Component, createContext } from "react";
 
-export const AppContext = createContext(null);
+export const {Provider, Consumer} = createContext();
 
-export function useAppContext() {
-  return useContext(AppContext);
+class AppContextProvider extends Component {
+  state = {
+    isAuthenticated: false
+  }; 
+  changeAuthenticated = (newAuth) => {
+    console.log("made it here");
+    this.setState({isAuthenticated: newAuth});
+  };
+  render(){
+    return (
+      <Provider value={{state: this.state, changeAuth: this.changeAuthenticated}}>
+          {this.props.children}
+      </Provider>
+    );
+  }
 }
+
+export { AppContextProvider, Consumer as AppContextConsumer };
