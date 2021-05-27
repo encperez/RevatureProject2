@@ -4,8 +4,10 @@ import axios from "axios";
 import "./words.css";
 import { useEffect, useState } from "react";
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import GlobalContext from "./global.context";
 
 export default class Word extends Component {
+    static contextType = GlobalContext
 
     constructor(props) {
         super(props);
@@ -13,7 +15,7 @@ export default class Word extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.dictionaryAPI = this.dictionaryAPI.bind(this);
-
+        this.handleAddWord = this.handleAddWord.bind(this);
       }
 
     dictionaryAPI = async(word) => {
@@ -31,11 +33,28 @@ export default class Word extends Component {
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value})
     }
-
+    
+    handleAddWord = (event) => {
+        const {url, setUrl, word, setWord, user, setUser} = this.context
+        let response;
+        axios.put('http://localhost:8080/word/'+sessionStorage.getItem("myID")+'/'+this.state.word).then(res=>{
+            response = res.data;
+            console.log(res.data);
+        }).then(resp => {
+            if(response != null) {
+                alert("Word added");
+            }
+            else {
+                alert("Word not added");
+            }
+        });
+        event.preventDefault();
+    }
     
     handleSubmit = (event) => {
         this.dictionaryAPI(this.state.word);
         event.preventDefault();
+        
       }
 
       render() {
@@ -72,6 +91,7 @@ export default class Word extends Component {
                 {this.state.word === "" ? (
                     <span className="subTitle">Start by typing a word in search</span>
                 ) : (
+                    
                     this.state.meanings.map((mean) =>
                     mean.meanings.map((item) =>
                         item.definitions.map((def) => (
@@ -89,11 +109,18 @@ export default class Word extends Component {
                                 <b>Synonyms :</b> {def.synonyms.map((s) => `${s}, `)}
                             </span>
                             )}
+                            <div>
+                                <form onSubmit={this.handleAddWord}>
+                                    <button type="submit" className="btn btn-primary btn-block">Add Word</button>
+                                </form>
+                            </div>
                         </div>
                         ))
                     )
                     )
                 )}
+                
+                
             </div>
 
         </ React.Fragment>
