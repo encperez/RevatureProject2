@@ -1,9 +1,9 @@
 import React from 'react';
 import {Component} from 'react';
 
-export const LinkContext = React.createContext('defaultVal')
+export const GlobalContext = React.createContext()
 
-class LinkProvider extends Component {
+class GlobalProvider extends Component {
     state = {
         url: "www.test.com",        
         word: 'bird',
@@ -22,20 +22,19 @@ class LinkProvider extends Component {
         this.setState({user: u})
     }
 
-    // what this
     render() {
         const {children} = this.props
         const {url, word, user} = this.state
         const {setUrl, setWord, setUser} = this
 
         return(
-            <LinkContext.Provider value={{url, setUrl, word, setWord, user, setUser}}>
+            <GlobalContext.Provider value={{url, setUrl, word, setWord, user, setUser}}>
             {children}
-            </LinkContext.Provider>
+            </GlobalContext.Provider>
         )
     }
 }
 
-export default LinkContext
+export default GlobalContext
 
-export { LinkProvider }
+export { GlobalProvider }

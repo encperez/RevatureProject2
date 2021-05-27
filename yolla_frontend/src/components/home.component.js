@@ -3,7 +3,7 @@ import axios from "axios";
 import Word from "./word.component";
 import Video from "./video.component";
 import Caption from './caption.component';
-import { LinkProvider } from "./link.context";
+import { GlobalProvider } from "./global.context";
 
 export default class Home extends Component {
 
@@ -53,7 +53,7 @@ export default class Home extends Component {
     render() {
         return (
             <React.Fragment>
-                <LinkProvider>
+                <GlobalProvider>
                 <div>
                     <Video />
                 </div>
@@ -61,7 +61,7 @@ export default class Home extends Component {
                 <div>
                     <Word />
                 </div>
-                </LinkProvider>    
+                </GlobalProvider>    
             </React.Fragment>
         );
         

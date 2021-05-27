@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import LinkContext from './link.context'
+import GlobalContext from './global.context'
 //xml2js module needed
 
 const PHRASE_WORD_LEN = 5 // number of words shown in the select dropdown for context
@@ -10,7 +10,7 @@ const UPDATE_CAPTION_MS = 250 //
 //const videoId = 'zenMEj0cAC4'// cWDJoK8zw58 // zenMEj0cAC4
 
 export default class Caption extends Component {
-    static contextType = LinkContext
+    static contextType = GlobalContext
 
     constructor(props) {
         super(props)
