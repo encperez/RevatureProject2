@@ -1,10 +1,10 @@
-import React, {Component } from "react";
+import React, { Consumer, Component } from "react";
 import axios from "axios";
+import { useAppContext } from "../libs/contextLib";
 import GlobalContext from './global.context'
 import FocusTrap from 'focus-trap-react'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-export default class Login extends Component {
+export default class Register extends Component {
 
     static contextType = GlobalContext;
     constructor(props) {
@@ -25,23 +25,42 @@ export default class Login extends Component {
 
         const request = {username: this.state.username, password: this.state.password};
         let response;
-        axios.post('http://localhost:8080/login', request).then(res=>{
+        if(this.state.password === ""){
+            alert("Please enter a valid password");
+        }
+        else if(this.state.username === ""){
+            alert("Please enter a valid username");
+        }
+        else if(this.state.password.length < 7){
+            alert("Password must at least be 7 characters");
+        }
+        else{
+        axios.post('http://localhost:8080/register', request).then(res=>{
             response = res.data;
             console.log(res.data);
         }).then(resp =>{
-            if(response === ""){
-                alert("Incorrect username or password!");
+            if(response === "false"){
+                alert("Username already taken.");
             }
             else{
-                sessionStorage.setItem('myUser', this.state.username);
-                sessionStorage.setItem('myID', response);
-                console.log("yo yo yo" + sessionStorage.getItem("myID"));
                 this.context.setUser(this.state.username);
                 console.log(sessionStorage.getItem("myUser"));
-                alert("Valid Login");
-                this.props.history.push("/home");
+                axios.post('http://localhost:8080/login', request).then(res=>{
+                    response = res.data;
+                    console.log(res.data);
+                }).then(resp =>{
+
+                    sessionStorage.setItem('myUser', this.state.username);
+                    sessionStorage.setItem('myID', response);
+                    this.context.setUser(this.state.username);
+                    console.log(sessionStorage.getItem("myUser"));
+                    alert("Thanks for registering an account with us now redirecting you to the homepage!");
+                    this.props.history.push("/home");
+
+                });
             }
         });
+        }
         event.preventDefault();
       }
 
@@ -60,10 +79,6 @@ export default class Login extends Component {
                 <div className="form-group">
                     <label>Password</label>
                     <input type="password" className="form-control" placeholder="Enter password" name = "password" onChange={this.handleChange} value = {this.state.password}/>
-                </div>
-
-                <div className="form-group">
-                    <Link className="nav-link" to={"/register"}>New User? Click here to register an account!</Link>
                 </div>
                 <GlobalContext.Consumer>
                 {({ user , setUser }) => (

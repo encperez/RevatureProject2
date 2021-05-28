@@ -7,10 +7,18 @@ export default class Bookmark extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { title: '', starttime: 0, endtime: 0, url: '', username: '' };
+        this.state = { title: '', starttime: 0, endtime: 0, url: '', username: '' , page:"/"};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentDidMount() {
+        this.interval = setInterval(() => this.setState({page: window.location.pathname}), 1000)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+      }
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value})
@@ -37,6 +45,8 @@ export default class Bookmark extends Component {
 
     render() {
         return (
+        <React.Fragment>
+        {window.location.pathname == "/home" &&
         <div className='Bookmark'>
             <form onSubmit={this.handleSubmit}>
             <h3>Create a Bookmark</h3>
@@ -57,6 +67,8 @@ export default class Bookmark extends Component {
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
             </form>
         </div>
+        }
+        </React.Fragment>
         );
     }
 }
