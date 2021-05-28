@@ -37,9 +37,9 @@ export default class Bookmark extends Component {
 
     render() {
         return (
-        <React.Fragment>
+        <div className='Bookmark'>
             <form onSubmit={this.handleSubmit}>
-                <h3>Create a Bookmark</h3>
+            <h3>Create a Bookmark</h3>
                 <div className='form-group'>
                     <label>Title</label>
                     <input type="text" className="form-control" placeholder="Bookmark Title" name="title" onChange={this.handleChange} value={this.state.title} />
@@ -56,7 +56,7 @@ export default class Bookmark extends Component {
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
             </form>
-        </React.Fragment>
+        </div>
         );
     }
 }

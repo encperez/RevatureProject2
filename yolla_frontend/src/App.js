@@ -7,37 +7,47 @@ import Login from "./components/login.component";
 import Home from "./components/home.component";
 import { AppContext } from "./libs/contextLib";
 import { GlobalProvider } from "./components/global.context";
+import Sidebar from './components/sidebar.component'
+import Bookmark from './components/bookmark.component';
 
 function App() {
-  return (<Router>
-    localStorage.setItem
-    <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to={"/sign-in"}>navbar</Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to={"/sign-in"}>Login</Link>
-              </li>
+  return (
+    <div className='App'>
+      {/* localStorage.setItem */}
+      <div className="App">
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+          <div className="container">
+            <Link className="navbar-brand" to={"/sign-in"}>navbar</Link>
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/sign-in"}>Login</Link>
+                </li>
 
-            </ul>
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      <div className="auth-wrapper">
-        <div className="auth-inner">
-          <Switch>
-          <GlobalProvider>
-            <Route exact path='/' component={Login} />
-            <Route path="/sign-in" component={Login} />
-            <Route path="/home" component={Home} />
-          </GlobalProvider>
-          </Switch>
-        </div>
+        <GlobalProvider>
+          <Sidebar />
+          <div className='content-container'>
+            <div className="auth-wrapper">
+              <div className="auth-inner">
+                <Switch>
+                  <Route exact path='/' component={Login} />
+                  <Route path="/sign-in" component={Login} />
+                  <Route path="/home" component={Home} />
+                </Switch>
+              </div>
+            </div>
+            <div>
+              <Bookmark />
+            </div>
+          </div>
+        </GlobalProvider>
       </div>
-    </div></Router>
+    </div>
   );
 }
 

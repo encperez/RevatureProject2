@@ -4,9 +4,10 @@ import axios from "axios";
 import "./words.css";
 import { useEffect, useState } from "react";
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import GlobalContext from './global.context'
 
 export default class Word extends Component {
-
+    static contextType = GlobalContext
     constructor(props) {
         super(props);
         this.state = { word: '', meanings: [] };
@@ -30,6 +31,7 @@ export default class Word extends Component {
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value})
+        this.context.setWord(event.target.value)
     }
 
     
@@ -42,12 +44,8 @@ export default class Word extends Component {
         return (
         <React.Fragment>
             <form className="form-inline" onSubmit={this.handleSubmit}>
-                <div className="form-group mb-2">
-                    <div className="form-group mb-2">
-                        <input type="text" className="form-control" placeholder="Enter a word you want to look up!" name="word" onChange={this.handleChange} value = {this.state.word} />
-                    </div>
-                    <button type="submit" className={"btn btn-primary mb-2"}>Submit</button>
-                </div>
+                <input type="text" className="form-control" placeholder="Enter a word you want to look up!" name="word" onChange={this.handleChange} value = {this.state.word} />
+                <button type="submit" className={"btn btn-primary"}>Submit</button>
             </form>
             <div 
                 className="meanings"

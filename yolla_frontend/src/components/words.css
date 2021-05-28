@@ -7,7 +7,7 @@
 }
 
 .meanings{
-    max-height: 300px;
+    margin-top: 2px;
     overflow: "scroll";
     scrollbar-width: thin;
 }

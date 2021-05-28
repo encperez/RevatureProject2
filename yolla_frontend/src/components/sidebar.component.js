@@ -18,8 +18,7 @@ export default class Sidebar extends Component {
 
     render() {
         return (
-        <React.Fragment>
-            <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
+            <div className='Sidebar'>
             <CDBSidebar textColor="#fff" backgroundColor="#333">
             <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
             <a
@@ -44,7 +43,6 @@ export default class Sidebar extends Component {
                 </CDBSidebarFooter>
             </CDBSidebar>
             </div>
-        </React.Fragment>
         );
     }
 }

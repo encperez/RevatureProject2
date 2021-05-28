@@ -3,7 +3,6 @@ import axios from "axios";
 import Word from "./word.component";
 import Video from "./video.component";
 import Caption from './caption.component';
-import Bookmark from './bookmark.component';
 
 export default class Home extends Component {
     constructor(props) {
@@ -29,7 +28,6 @@ export default class Home extends Component {
           : null;
     }
 
-
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value})
     }
@@ -42,8 +40,6 @@ export default class Home extends Component {
       document.getElementById("player").src = "//www.youtube.com/embed/" + embedURL;
       event.preventDefault();
     }
-
-
     
     render() {
         return (
@@ -51,10 +47,7 @@ export default class Home extends Component {
                 <div>
                     <Video />
                 </div>
-                <div>
-                    <Bookmark />
-                </div>
-                <Caption />
+                <Caption />           
                 <div>
                     <Word />
                 </div>

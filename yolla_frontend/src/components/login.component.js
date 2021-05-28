@@ -2,6 +2,7 @@ import React, { Consumer, Component } from "react";
 import axios from "axios";
 import { useAppContext } from "../libs/contextLib";
 import GlobalContext from './global.context'
+import FocusTrap from 'focus-trap-react'
 
 export default class Login extends Component {
 
@@ -46,7 +47,9 @@ export default class Login extends Component {
 
     render() {
         return (
+            <FocusTrap actuve={true}>
             <form onSubmit={this.handleSubmit}>
+                
                 <h3>Sign In</h3>
 
                 <div className="form-group">
@@ -71,6 +74,7 @@ export default class Login extends Component {
                 )}
                 </GlobalContext.Consumer>
             </form>
+            </FocusTrap>
         );
     }
 }
