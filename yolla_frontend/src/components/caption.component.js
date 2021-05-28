@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import GlobalContext from './global.context'
+// import CaptionHighlight from './captionhighlight.component';
 //xml2js module needed
 
 const PHRASE_WORD_LEN = 5 // number of words shown in the select dropdown for context
@@ -8,6 +9,16 @@ const MIN_WORD_LEN = 4    // min length of word to make searchable
 const MAX_WORD_LEN = 10   // max length ...
 const UPDATE_CAPTION_MS = 250 //
 //const videoId = 'zenMEj0cAC4'// cWDJoK8zw58 // zenMEj0cAC4
+
+/*
+https://youtu.be/F-p_7XaEC84     kurbernetes
+https://youtu.be/bt90VCye6Vk     korean
+https://youtu.be/RSIstPUiEjY     docker
+https://youtu.be/69ngtfAW3Og     yourname        en-GB, 0   
+https://youtu.be/zenMEj0cAC4     turbochargers   en, 0
+https://youtu.be/tuJqH3AV0e8     microservices
+https://youtu.be/HLWgVpmo1e0     podcast
+*/
 
 export default class Caption extends Component {
     static contextType = GlobalContext
@@ -45,36 +56,63 @@ export default class Caption extends Component {
                     // NOTE: the iframe player must allow js access with http://...?enablejsapi=1
                     let ytPlayer = new window.YT.Player('player',
                         {
+                            playerVars: {
+                                "enablejsapi":1,
+                                "origin":document.domain,
+                                "rel":0
+                            },
                             events: {
                                 'onStateChange': this.onPlayerStateChange,
-                                'onReady': this.onPlayerReady
+                                'onReady': this.onPlayerReady,
+                                'onApiChange': this.onApiChange
                             }
                         })
                     this.setState({ player: ytPlayer })
+                    this.context.setPlayer(ytPlayer)
+                    this.context.setVideoIdCb(this.onPlayerReady)
                 }
             })
     }
 
     onPlayerReady = () => {
-        let vdata = this.state.player.getVideoData()
-        let id = vdata.video_id;
-        const { url, setUrl, word, setWord, user, setUser } = this.context
-        setUrl(id)
-        this.getCaptions(id)
+        //console.log('ready')
 
         // setTimeout(() => {
-        //     console.log(this.context.user)
-        //     console.log(this.context.url)
+        //     console.log(this.context.videoId)
+        //     // console.log(this.context.url)
         // }, 1)
+
+          let vdata = this.state.player.getVideoData()
+          let id = this.context.videoId || vdata.video_id;
+
+        //console.log(id)
+
+        // const { setUrl } = this.context
+        // setUrl(id)
+         this.getCaptions(id)
+
+
+    }
+
+    onAPiChange = () => {
+        console.log('change')
     }
 
     // @todo could manually parse the xml first time through so json conversion is eliminated
     getCaptions = async (videoId) => {
         try {
-            const data = await axios.get(`http://video.google.com/timedtext?type=track&id=0&lang=en&v=${videoId}`);
+            let data = await axios.get(`http://video.google.com/timedtext?type=track&id=0&lang=en&v=${videoId}`);
+            if(data.data === "")
+                data = await axios.get(`http://video.google.com/timedtext?type=track&id=0&lang=en-GB&v=${videoId}`);
+            if(data.data === "") {
+                this.setState({ captions: {}, searchTable: {} })
+                throw 'unable to load'
+            }
 
             //convert xml to json, then parse into lookup table
-            const parseString = require('xml2js').parseString;
+            let xml2js = require('xml2js')
+            let parser = new xml2js.Parser({emptyTag: ' '})
+            const parseString = parser.parseString;
             let captions = {}
             let lookup = {}
 
@@ -82,7 +120,8 @@ export default class Caption extends Component {
                 result.transcript.text.map(entry => {
                     // time, line
                     let time = Math.floor(Number(entry.$.start))
-                    let line = entry._.replaceAll('&#39;', "'") // remove html code
+                    //let line = entry._ // remove html code
+                    let line = entry._.replaceAll('\n', ' ').replaceAll('&#39;', "'").replaceAll('&quot;', '"').replaceAll('&apos;', "'") // remove html code
 
                     captions[time] = line
 
@@ -90,7 +129,9 @@ export default class Caption extends Component {
                     let regexWord = `^[-a-zA-Z0-9]{${MIN_WORD_LEN},${MAX_WORD_LEN}}$`
                     const words = line.split(" ")
                     words.forEach((word, index) => {
+                        //lowercase, remove punctuation, then match regex
                         let w = word.toLowerCase().match(regexWord)
+                        //let w = word.toLowerCase().replace(/[\p{P}$+<=>^`|~]/gu, '').match(regexWord)
                         if (w === null)
                             return
 
@@ -132,8 +173,8 @@ export default class Caption extends Component {
                 })
             })
             this.setState({ captions: captions, searchTable: lookup })
-             //console.log(this.state.searchTable)
-            // console.log(this.state.captions)
+              //console.log(this.state.searchTable)
+            //  console.log(this.state.captions)
             this.getCaptionLine(this.state.timestamp)
         } catch (err) {
             console.log(err)
@@ -221,6 +262,7 @@ export default class Caption extends Component {
                     <form><fieldset><legend>Captions</legend>
                         <div className="form-group">
                             <input type='text' className='form-control' name='caption' placeholder='caption' value={this.state.line} readOnly />
+                            {/* <CaptionHighlight phrase={this.state.line}/> */}
                             {/* <input type='text' className='form-control' name='searchCaption' placeholder='search' onChange={e => this.setState({searchTerm: e.target.value})}/> */}
                             {this.getDropdown()}
                         </div>

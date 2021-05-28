@@ -84,15 +84,14 @@ body, html, .App, #root, .auth-wrapper
   height: calc(100vh - 56px);
 }
 
-
 input[name=url], input[name=word]
 {
-  width: 65% !important;
+  width: 60.7em !important;
   margin: 4px;
   display: inline;
 }
 input[name=word] {
-  width: calc(100% - 76px - 10px) !important;
+  width: calc(100% - 76px - 5px) !important;
   margin-left: 0;
 }
 

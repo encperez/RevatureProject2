@@ -32,12 +32,17 @@ export default class Video extends Component {
 
     handleSubmit = (event) => {
 
-      alert(this.state.url);
-      const {url, setUrl, word, setWord, user, setUser} = this.context
-      setUrl(this.state.url)
-      let embedURL = this.makeEmbedURL(this.state.url);
+        let trimmed = this.state.url.trim()
+
+      alert(trimmed);
+      const {setUrl, ytPlayer, setVideoId} = this.context
+      setUrl(trimmed)
+      let embedURL = this.makeEmbedURL(trimmed);
       alert(embedURL);
-      document.getElementById("player").src = "//www.youtube.com/embed/" + embedURL;
+      //document.getElementById("player").src = "https://www.youtube.com/embed/" + embedURL + "?enablejsapi=1&t=0";
+      setVideoId(embedURL)
+      ytPlayer.loadVideoById(embedURL, 0)
+
       event.preventDefault();
     }
 
@@ -53,7 +58,7 @@ export default class Video extends Component {
                         <button type="submit" className="btn btn-primary ">Submit</button>
                     </div>
                 </form>
-                <iframe src="https://www.youtube.com/embed/zenMEj0cAC4?enablejsapi=1" id="player" height="480" width="100%"/>
+                <iframe src="https://www.youtube.com/embed/F-p_7XaEC84?enablejsapi=1" id="player" height="480" width="100%"/>
             </React.Fragment>         
         );
         

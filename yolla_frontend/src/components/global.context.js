@@ -10,7 +10,30 @@ class GlobalProvider extends Component {
         word: 'bird',
         setWord: this.setWord,
         user: '',
-        setUser: this.setUser
+        setUser: this.setUser,
+        ytPlayer: null,
+        setPlayer: this.SetPlayer,
+        videoId: '',
+        setVideoId: this.setVideoId,
+        videoIdCb: null,
+        setVideoIdCb: this.setVideoIdCb
+    }
+
+    setVideoIdCb = (cb) => {
+        this.setState({videoIdCb: cb})
+    }
+
+    setVideoId = (id) => {
+        this.setState({videoId: id})
+        if(this.state.videoIdCb !== null) {
+            setTimeout(() => {
+                this.state.videoIdCb()
+            }, 1)
+        }
+    }
+
+    setPlayer = (p) => {
+        this.setState({ytPlayer: p})
     }
 
     setUrl = (u) => {
@@ -28,11 +51,11 @@ class GlobalProvider extends Component {
 
     render() {
         const {children} = this.props
-        const {url, word, user} = this.state
-        const {setUrl, setWord, setUser} = this
+        const {url, word, user, ytPlayer, videoId, videoIdCb} = this.state
+        const {setUrl, setWord, setUser, setPlayer, setVideoId, setVideoIdCb} = this
 
         return(
-            <GlobalContext.Provider value={{url, setUrl, word, setWord, user, setUser}}>
+            <GlobalContext.Provider value={{url, setUrl, word, setWord, user, setUser, ytPlayer, setPlayer, videoId, setVideoId, videoIdCb, setVideoIdCb}}>
             {children}
             </GlobalContext.Provider>
         )
