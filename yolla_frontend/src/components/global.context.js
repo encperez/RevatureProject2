@@ -16,7 +16,14 @@ class GlobalProvider extends Component {
         videoId: '',
         setVideoId: this.setVideoId,
         videoIdCb: null,
-        setVideoIdCb: this.setVideoIdCb
+        setVideoIdCb: this.setVideoIdCb,
+        onWordChange: [],
+        subscribeWordChange: this.subscribeWordChange
+    }
+
+    //@todo unsubscribe
+    subscribeWordChange = (cb) => {
+        this.setState( { onWordChange: [...this.state.onWordChange, cb] } )
     }
 
     setVideoIdCb = (cb) => {
@@ -42,20 +49,23 @@ class GlobalProvider extends Component {
 
     setWord = (w) => {
         this.setState({word: w})
+        setTimeout(() => {
+            this.state.onWordChange.forEach( c => c() )
+        }, 1)      
     }
 
     setUser = (u) => {
-        console.log("I'm here");
+        //console.log("I'm here");
         this.setState({user: u})
     }
 
     render() {
         const {children} = this.props
-        const {url, word, user, ytPlayer, videoId, videoIdCb} = this.state
-        const {setUrl, setWord, setUser, setPlayer, setVideoId, setVideoIdCb} = this
+        const {url, word, user, ytPlayer, videoId, videoIdCb, onWordChange} = this.state
+        const {setUrl, setWord, setUser, setPlayer, setVideoId, setVideoIdCb, subscribeWordChange} = this
 
         return(
-            <GlobalContext.Provider value={{url, setUrl, word, setWord, user, setUser, ytPlayer, setPlayer, videoId, setVideoId, videoIdCb, setVideoIdCb}}>
+            <GlobalContext.Provider value={{url, setUrl, word, setWord, user, setUser, ytPlayer, setPlayer, videoId, setVideoId, videoIdCb, setVideoIdCb, onWordChange, subscribeWordChange}}>
             {children}
             </GlobalContext.Provider>
         )

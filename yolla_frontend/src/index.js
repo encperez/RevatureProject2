@@ -4,15 +4,15 @@ import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { GlobalProvider } from "./components/global.context";
+// import { GlobalProvider } from "./components/global.context";
 
 
 ReactDOM.render(
-  <GlobalProvider>
+  // <GlobalProvider>
   <BrowserRouter>
       <App />
   </BrowserRouter>
-  </GlobalProvider>
+  // </GlobalProvider>
   ,
   document.getElementById("root")
 );

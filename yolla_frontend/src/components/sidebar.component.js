@@ -20,17 +20,17 @@ export default class Sidebar extends Component {
     handleInterval(){
         let wordResponse;
         let bookmarkResponse;
-        console.log(window.location.pathname);
+//        console.log(window.location.pathname);
         if(window.location.pathname == "/home"){
             axios.get('http://localhost:8080/user/' + sessionStorage.getItem("myID")).then(res=>{
                 wordResponse = Object.keys(res.data.words);
-                console.log(wordResponse);
+                //console.log(wordResponse);
                 this.setState({words: wordResponse});
             });
 
             axios.get('http://localhost:8080/bookmark/' + sessionStorage.getItem("myUser")).then(res=>{
                 bookmarkResponse = res.data;
-                console.log(bookmarkResponse);
+                //console.log(bookmarkResponse);
                 this.setState({bookmarks: bookmarkResponse});
             })
         }
@@ -42,7 +42,8 @@ export default class Sidebar extends Component {
     handleWordClick(word){
         document.getElementById("wordInput").value = word;
         setTimeout(() => {
-            document.getElementById("wordSubmitButton").click();
+            this.context.setWord(word)
+             document.getElementById("wordSubmitButton").click();                        
           }, 500);
           return
 

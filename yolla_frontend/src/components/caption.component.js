@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import GlobalContext from './global.context'
+import { isThisTypeNode } from 'typescript';
 // import CaptionHighlight from './captionhighlight.component';
 //xml2js module needed
 
@@ -40,6 +41,7 @@ export default class Caption extends Component {
         this.handleSelect = this.handleSelect.bind(this)
         this.onPlayerStateChange = this.onPlayerStateChange.bind(this)
         this.onPlayerReady = this.onPlayerReady.bind(this)
+        this.onWordChangeEvt = this.onWordChangeEvt.bind(this)
     }
 
     componentDidMount = () => {
@@ -70,8 +72,15 @@ export default class Caption extends Component {
                     this.setState({ player: ytPlayer })
                     this.context.setPlayer(ytPlayer)
                     this.context.setVideoIdCb(this.onPlayerReady)
+                    
                 }
             })
+
+        this.context.subscribeWordChange(this.onWordChangeEvt)
+    }
+
+    onWordChangeEvt = () => {
+        this.getDropdown()
     }
 
     onPlayerReady = () => {
@@ -220,6 +229,7 @@ export default class Caption extends Component {
     }
 
     getDropdown = () => {
+        // console.log('getdropdown--------------------')
         try {
             const {word} = this.context
             const wordLower = word.toLowerCase()
@@ -258,6 +268,7 @@ export default class Caption extends Component {
     render() {
         return (
             <div className='Caption'>
+                {/* render being called alot */}
                 { Object.entries(this.state.captions).length !== 0 ? (
                     <form><fieldset><legend>Captions</legend>
                         <div className="form-group">

@@ -17,15 +17,25 @@ export default class Word extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.dictionaryAPI = this.dictionaryAPI.bind(this);
         this.handleAddWord = this.handleAddWord.bind(this);
+        this.onWordSelect = this.onWordSelect.bind(this);
+      }
+
+      componentDidMount = () => {
+          this.context.subscribeWordChange(this.onWordSelect)
+      }
+
+      onWordSelect = () => {
+        const {word} = this.context
+        this.setState({word: word})
       }
 
     dictionaryAPI = async(word) => {
         try {
             const data =await axios.get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word);
-            console.log(data.data);
+//            console.log(data.data);
             const newMeanings = [...data.data];
             this.setState({meanings: newMeanings})
-            this.state.meanings.map(mean => console.log(mean.meanings));
+//            this.state.meanings.map(mean => console.log(mean.meanings));
         } catch (error) {
             console.log(error)
         }

@@ -44,6 +44,7 @@ body, html, .App, #root, .auth-wrapper
   padding: 10px 55px 45px 55px;
   border-radius: 15px;
   transition: all .3s;
+  margin-top: 10px;
 }
 .Bookmark {
   height: unset;
@@ -86,7 +87,7 @@ body, html, .App, #root, .auth-wrapper
 
 input[name=url], input[name=word]
 {
-  width: 60.7em !important;
+  width: 59.6em !important;
   margin: 4px;
   display: inline;
 }
