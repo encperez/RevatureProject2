@@ -29,12 +29,12 @@ public class UserController {
     private UserService service;
 
     /**
-     *
+     * Clears contents of the database
      */
     public void clear() { service.clear(); }
 
     /**
-     *
+     *  Greeting page
      * @return
      */
     @RequestMapping("/")
@@ -68,7 +68,7 @@ public class UserController {
     }
 
     /**
-     *
+     * Get user
      * @param id
      * @return
      */
@@ -80,7 +80,7 @@ public class UserController {
     }
 
     /**
-     *
+     * Get words for a user
      * @param username
      * @return
      */
@@ -90,7 +90,7 @@ public class UserController {
     }
 
     /**
-     *
+     * Add a word to the user's list of words
      * @param id
      * @param word
      * @return
@@ -103,7 +103,7 @@ public class UserController {
     }
 
     /**
-     *
+     * Remove a word from the user's list of words
      * @param username
      * @param word
      * @return

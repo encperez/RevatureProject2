@@ -22,6 +22,15 @@ public class BookmarkService {
         dao.clear();
     }
 
+    /**
+     * Create a new bookmark and add it do the bookmark database
+     * @param title title of the new bookmark
+     * @param startTime start time of the new bookmark
+     * @param endTime end time of the new bookmark
+     * @param url url of the video for the bookmark
+     * @param username username of the user creating the bookmark
+     * @return true on success, false on failure
+     */
     public boolean newBookmark(String title, int startTime, int endTime, String url, String username) {
         Bookmark newBookmark = new Bookmark();
         newBookmark.setTitle(title);
@@ -38,6 +47,11 @@ public class BookmarkService {
         return true;
     }
 
+    /**
+     * Removes a bookmark from the database and from the current user
+     * @param bookmarkId ID of the bookmark being removed
+     * @param username username of the user removing the bookmark
+     */
     public void removeBookmark(String bookmarkId, String username) {
         System.out.println("Check 0");
         Bookmark targetBookmark = dao.getBookmarkById(bookmarkId);
@@ -50,6 +64,11 @@ public class BookmarkService {
         dao.updateUser(user);
     }
 
+    /**
+     * Grabs a user's bookmarks
+     * @param username user requesting their list of bookmarks
+     * @return list of bookmarks
+     */
     public Bookmark[] getBookmarks(String username) {
         User user = dao.getUserByUsername(username);
         List<String> bookmarks = user.getBookmarks();

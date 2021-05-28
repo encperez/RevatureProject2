@@ -33,9 +33,9 @@ public class UserService {
     }
 
     /**
-     *
-     * @param username
-     * @param password
+     * Creates a new user object and adds it to the database
+     * @param username username for the new user
+     * @param password password for the new user
      * @return true if user is created
      */
     public boolean NewUser(String username, String password) {
@@ -50,14 +50,19 @@ public class UserService {
     }
 
     /**
-     *
-     * @param username
+     * Gets user object from database using username
+     * @param username username of user
      * @return returned user
      */
     public User GetUser(String username) {
         return dao.GetUser(username);
     }
 
+    /**
+     * Gets user object from database using user ID
+     * @param id ID of user
+     * @return target user
+     */
     public User GetUserById(String id) {
         return dao.GetUserById(id);
     }
@@ -81,9 +86,9 @@ public class UserService {
 //    }
 
     /**
-     *
-     * @param id
-     * @return
+     * Method to get the list of words from current user
+     * @param id ID of current user
+     * @return List of words
      */
     public List<String> GetWords(String id) {
         User u = dao.GetUserById(id);
@@ -103,9 +108,9 @@ public class UserService {
     //public void RemoveBookMark(String username, String id){}
 
     /**
-     *
-     * @param id
-     * @param word
+     * Adds a word to the current user's word list
+     * @param id ID of current user
+     * @param word Word to add to the user's list
      */
     public void AddWord(String id, String word){
         User u = dao.GetUserById(id);
@@ -114,9 +119,9 @@ public class UserService {
     }
 
     /**
-     *
-     * @param id
-     * @param word
+     * Removes a word from the database and user's word list
+     * @param id ID of current user
+     * @param word Word being removed
      */
     public void RemoveWord(String id, String word){
         User u = dao.GetUserById(id);
@@ -125,10 +130,10 @@ public class UserService {
     }
 
     /**
-     *
-     * @param username
-     * @param password
-     * @return
+     * Checks for the existence of a user account with the listed credentials
+     * @param username username of account
+     * @param password password of account
+     * @return user object if one is found
      */
     public User LoginUser(String username, String password) {
         User u = dao.GetUser(username);

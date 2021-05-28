@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class YollaBackendApplicationTests {
 
-	//@Disabled
+	@Disabled
 	@Test
 	void contextLoads() {
 		YollaBackendApplication.main(new String[]{});
