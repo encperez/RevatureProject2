@@ -91,14 +91,15 @@ public class UserController {
 
     /**
      *
-     * @param username
+     * @param id
      * @param word
      * @return
      */
-    @PutMapping("/word/{username}/{word}")
-    public ResponseEntity AddWord(@PathVariable String username, @PathVariable String word) {
-        service.AddWord(username, word);
-        return ResponseEntity.ok(service.GetWords(username));
+    @PutMapping("/word/{id}/{word}")
+    public ResponseEntity AddWord(@PathVariable String id, @PathVariable String word) {
+        System.out.println("here" + id + word);
+        service.AddWord(id, word);
+        return ResponseEntity.ok(service.GetWords(id));
     }
 
     /**

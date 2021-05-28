@@ -3,6 +3,9 @@ import axios from "axios";
 import Word from "./word.component";
 import Video from "./video.component";
 import Caption from './caption.component';
+import Bookmark from './bookmark.component';
+import Sidebar from './sidebar.component';
+import { GlobalProvider } from "./global.context";
 
 export default class Home extends Component {
     constructor(props) {
@@ -44,6 +47,7 @@ export default class Home extends Component {
     render() {
         return (
             <React.Fragment>
+                <GlobalProvider>
                 <div>
                     <Video />
                 </div>
@@ -51,6 +55,7 @@ export default class Home extends Component {
                 <div>
                     <Word />
                 </div>
+                </GlobalProvider>    
             </React.Fragment>
         );
         

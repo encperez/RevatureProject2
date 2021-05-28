@@ -12,6 +12,7 @@ export default class Word extends Component {
     constructor(props) {
         super(props);
         this.state = { word: '', meanings: [] };
+        this.myWordRef = React.createRef();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.dictionaryAPI = this.dictionaryAPI.bind(this);
@@ -37,6 +38,7 @@ export default class Word extends Component {
     
     handleAddWord = (event) => {
         const {url, setUrl, word, setWord, user, setUser} = this.context
+        console.log(this.state.word);
         let response;
         axios.put('http://localhost:8080/word/'+sessionStorage.getItem("myID")+'/'+this.state.word).then(res=>{
             response = res.data;
@@ -53,7 +55,9 @@ export default class Word extends Component {
     }
     
     handleSubmit = (event) => {
-        this.dictionaryAPI(this.state.word);
+        let newWord = document.getElementById("wordInput").value;
+        this.setState({word: newWord});
+        this.dictionaryAPI(newWord);
         event.preventDefault();
         
       }
@@ -62,8 +66,8 @@ export default class Word extends Component {
         return (
         <React.Fragment>
             <form className="form-inline" onSubmit={this.handleSubmit}>
-                <input type="text" className="form-control" placeholder="Enter a word you want to look up!" name="word" onChange={this.handleChange} value = {this.state.word} />
-                <button type="submit" className={"btn btn-primary"}>Submit</button>
+                <input id = "wordInput" type="text" className="form-control" placeholder="Enter a word you want to look up!" name="word" onChange={this.handleChange} value = {this.state.word} />
+                <button id = "wordSubmitButton" type="submit" className={"btn btn-primary"}>Submit</button>
             </form>
             <div 
                 className="meanings"

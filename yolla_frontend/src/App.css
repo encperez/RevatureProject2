@@ -39,7 +39,7 @@
 
 .content-container {  
   margin-top: 56px; /* navbar calc height */
-  margin-left: 320px;
+  margin-left: 0px;
   min-height: calc(100vh - 56px);
   padding-top: 10px;
   display: flex;
