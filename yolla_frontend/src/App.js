@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Login from "./components/login.component";
+import Register from "./components/register.component";
 import Home from "./components/home.component";
 import { AppContext } from "./libs/contextLib";
 import { GlobalProvider } from "./components/global.context";
@@ -38,6 +39,7 @@ function App() {
                   <Route exact path='/' component={Login} />
                   <Route path="/sign-in" component={Login} />
                   <Route path="/home" component={Home} />
+                  <Route path="/register" component={Register} />
                 </Switch>
               </div>
             </div>
