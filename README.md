@@ -23,3 +23,7 @@ Yolla's goal is to allow users to look up words they may be having issues with u
 **Michael Fong**- Main role was getting bookmark functionality in the backend for creating new bookmarks in the database and updating a user with new bookmarks and words
 
 **Enrique Perez** - Main role was getting the front end of the application setup as well as handling the login, and hooking up into the dictionary API, and setting up the sidebar
+
+## To-do list
+* Add in Bookmark autoplay functionality in the sidebar.
+* Add password reset for user.
